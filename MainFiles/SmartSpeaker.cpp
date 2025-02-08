@@ -24,9 +24,7 @@ void SmartSpeaker::InteractionEvent() {
 
 void SmartSpeaker::ViewInfo() {
     cout << "Smart Speaker Info:" << endl;
-    cout << "ID: " << id << endl;
-    cout << "Name: " << name << endl;
-    cout << "Manufacturer: " << manufacturer << endl;
+    cout << "ID: " << id << ", Name: " << name << ", Manufacturer: " << manufacturer << endl;
     cout << "Volume Level: " << volumeLevel << endl;
     cout << "Status: " << (status ? "Active" : "Inactive") << endl;
 }

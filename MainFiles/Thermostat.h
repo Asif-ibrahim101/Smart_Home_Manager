@@ -3,18 +3,14 @@
 
 #include "Device.h"
 
-// Derived class for Thermostat devices
+// Derived class for Thermostat devices.
 class Thermostat : public Device {
 private:
-    double targetTemperature;  // Target temperature setting
+    double targetTemperature;  // Target temperature setting.
 
 public:
     Thermostat(int id, const string &name, const string &manufacturer, double targetTemperature);
-
-    // Allow the user to set the target temperature via interaction
     void InteractionEvent() override;
-
-    // Display information about the thermostat
     void ViewInfo() override;
 };
 

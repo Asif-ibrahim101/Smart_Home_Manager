@@ -17,7 +17,7 @@ void SmartLight::InteractionEvent() {
             brightnessLevel = newBrightness;
             cout << "Brightness updated to " << brightnessLevel << "." << endl;
         }
-        // If the device supports RGB, allow changing the colour
+        // If the device supports RGB, allow colour change.
         if (colourType == "RGB") {
             cout << "Current colour: " << colourType << endl;
             cout << "Enter new colour description (e.g., Red, Blue, etc.): ";
@@ -33,10 +33,7 @@ void SmartLight::InteractionEvent() {
 
 void SmartLight::ViewInfo() {
     cout << "Smart Light Info:" << endl;
-    cout << "ID: " << id << endl;
-    cout << "Name: " << name << endl;
-    cout << "Manufacturer: " << manufacturer << endl;
-    cout << "Brightness Level: " << brightnessLevel << endl; 
-    cout << "Colour Type: " << colourType << endl;
+    cout << "ID: " << id << ", Name: " << name << ", Manufacturer: " << manufacturer << endl;
+    cout << "Brightness Level: " << brightnessLevel << ", Colour Type: " << colourType << endl;
     cout << "Status: " << (status ? "Active" : "Inactive") << endl;
 }
