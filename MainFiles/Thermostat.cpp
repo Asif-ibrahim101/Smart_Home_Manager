@@ -7,7 +7,7 @@ Thermostat::Thermostat(int id, const string &name, const string &manufacturer, d
 
 void Thermostat::InteractionEvent() {
     if (status) {
-        cout << "Current target temperature for " << name << " is " << targetTemperature << "°C." << endl;
+        cout << "Current target temperature for " << name << " is " << targetTemperature << "C." << endl;
         cout << "Enter new target temperature: ";
         double newTemp;
         cin >> newTemp;

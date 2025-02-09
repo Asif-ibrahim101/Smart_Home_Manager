@@ -8,6 +8,7 @@
 #include <vector>
 #include <math.h>
 #include <memory> //useing for smart pointers
+#include <random>
 using namespace std;
 
 // Displaying the main menu
@@ -50,16 +51,26 @@ void listDevices(const vector<unique_ptr<Device>> &devices)
     };
 }
 
+
+// Function to generate a random ID
+// taken form the internet
+int generateRandomID() {
+    static std::random_device rd; // Seed
+    static std::mt19937 gen(rd()); // Mersenne Twister engine
+    static std::uniform_int_distribution<> dis(1000, 9999); // Random ID between 1000 and 9999
+    return dis(gen);
+}
+
 // the main function
 int main()
 {
     vector<unique_ptr<Device>> devices;
 
     // Allocating all the devicess on a Heap memory
-    devices.push_back(unique_ptr<Device>(new SecurityCamera(1, "Cammera_1", "CamCorp", "1080p", "battery")));
-    devices.push_back(unique_ptr<Device>(new Thermostat(2, "Thermo_1", "HeatTech", 22.5)));
-    devices.push_back(unique_ptr<Device>(new SmartSpeaker(3, "Speaker_1", "SoundInc", 50)));
-    devices.push_back(unique_ptr<Device>(new SmartLight(4, "Light_1", "BrightCo", 75, "RGB")));
+    devices.push_back(unique_ptr<Device>(new SecurityCamera(generateRandomID(), "FrontDoorCamera", "CamCorp", "1080p", "battery")));
+    devices.push_back(unique_ptr<Device>(new Thermostat(generateRandomID(), "LivingRoomThermostat", "HeatTech", 22.5)));
+    devices.push_back(unique_ptr<Device>(new SmartSpeaker(generateRandomID(), "KitchenSpeaker", "SoundInc", 50)));
+    devices.push_back(unique_ptr<Device>(new SmartLight(generateRandomID(), "BedroomLight", "BrightCo", 75, "RGB")));
 
     // Choose
     int Choice;
@@ -79,14 +90,17 @@ int main()
             for (auto &device : devices)
                 device->Activate();
             break;
+
         case 2: // Deactivate all devices.
             for (auto &device : devices)
                 device->Deactivate();
             break;
+
         case 3: // Trigger InteractionEvent for all devices.
             for (auto &device : devices)
                 device->InteractionEvent();
             break;
+
         case 4: // View info for all devices.
             for (auto &device : devices)
             {
@@ -94,22 +108,27 @@ int main()
                 cout << "---------------------\n";
             }
             break;
+
         case 5:
         { // Individual device operations.
             listDevices(devices);
             cout << "Select device number: ";
             int devNum;
             cin >> devNum;
+
+            // cheker for selection
             if (devNum < 1 || devNum > devices.size())
             {
                 cout << "Invalid device number.\n";
                 break;
             }
+            
             auto &selectedDevice = devices[devNum - 1];
             
             displayIndividualMenu();
             int subChoice;
             cin >> subChoice;
+
             switch (subChoice)
             {
             case 1:
@@ -140,17 +159,16 @@ int main()
 
             int typeChoice;
             cin >> typeChoice;
-            int id;
+
+            int id = generateRandomID();
             string name, manufacturer;
 
             // for cheking for uniqe id
-            bool idExits = false;
+            // bool idExits = false;
 
-            cout << "Enter device ID (integer): ";
-            cin >> id;
             cout << "Enter device name: ";
-            cin >> name;
-            
+            cin >> name; // Skip any leading whitespace.
+
             getline(cin, name);
 
             cout << "Enter manufacturer: ";
@@ -202,14 +220,16 @@ int main()
             cout << "Select device number to edit: ";
             int devNum;
             cin >> devNum;
-            if (devNum < 1 || devNum > (int)devices.size())
+
+            if (devNum < 1 || devNum > devices.size())
             {
                 cout << "Invalid device number.\n";
                 break;
             }
             cout << "Enter new name: ";
-            cin >> ws;
             string newName;
+
+            cin >> newName;
             getline(cin, newName);
 
             cout << "Enter new manufacturer: ";
@@ -227,11 +247,13 @@ int main()
             cout << "Select device number to delete: ";
             int devNum;
             cin >> devNum;
-            if (devNum < 1 || devNum > (int)devices.size())
+
+            if (devNum < 1 || devNum > devices.size())
             {
                 cout << "Invalid device number.\n";
                 break;
             }
+
             devices.erase(devices.begin() + (devNum - 1));
             cout << "Device deleted.\n";
             break;
