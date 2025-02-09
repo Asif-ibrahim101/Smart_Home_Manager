@@ -13,6 +13,7 @@ private:
 public:
     SecurityCamera(int id, const string &name, const string &manufacturer,
                    const string &cameraQuality, const string &power);
+                   
     void InteractionEvent() override;
     void ViewInfo() override;
 };

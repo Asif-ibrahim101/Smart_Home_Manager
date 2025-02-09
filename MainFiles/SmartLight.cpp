@@ -32,8 +32,12 @@ void SmartLight::InteractionEvent() {
 }
 
 void SmartLight::ViewInfo() {
-    cout << "Smart Light Info:" << endl;
-    cout << "ID: " << id << ", Name: " << name << ", Manufacturer: " << manufacturer << endl;
-    cout << "Brightness Level: " << brightnessLevel << ", Colour Type: " << colourType << endl;
-    cout << "Status: " << (status ? "Active" : "Inactive") << endl;
+    cout << "==================== Smart Light Info ====================" << endl;
+    cout << "ID            : " << id << endl;
+    cout << "Name          : " << name << endl;
+    cout << "Manufacturer  : " << manufacturer << endl;
+    cout << "Brightness    : " << brightnessLevel << "%" << endl;
+    cout << "Colour Type   : " << colourType << endl;
+    cout << "Status        : " << (status ? "Active" : "Inactive") << endl;
+    cout << "==========================================================" << endl;
 }

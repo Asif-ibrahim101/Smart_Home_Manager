@@ -42,7 +42,7 @@ void displayIndividualMenu()
 void listDevices(const vector<unique_ptr<Device>> &devices)
 {
     cout << "\n--- Device List ---\n";
-    for (size_t i = 0; i < devices.size(); i++)
+    for (int i = 0; i < devices.size(); i++)
     {
         cout << i + 1 << ".\n";
         devices[i]->ViewInfo();
@@ -100,12 +100,13 @@ int main()
             cout << "Select device number: ";
             int devNum;
             cin >> devNum;
-            if (devNum < 1 || devNum > (int)devices.size())
+            if (devNum < 1 || devNum > devices.size())
             {
                 cout << "Invalid device number.\n";
                 break;
             }
             auto &selectedDevice = devices[devNum - 1];
+            
             displayIndividualMenu();
             int subChoice;
             cin >> subChoice;
@@ -148,7 +149,8 @@ int main()
             cout << "Enter device ID (integer): ";
             cin >> id;
             cout << "Enter device name: ";
-            cin >> ws; // Skip any leading whitespace.
+            cin >> name;
+            
             getline(cin, name);
 
             cout << "Enter manufacturer: ";

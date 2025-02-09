@@ -15,8 +15,14 @@ void SecurityCamera::InteractionEvent() {
 }
 
 void SecurityCamera::ViewInfo() {
-    cout << "Security Camera Info:" << endl;
-    cout << "ID: " << id << ", Name: " << name << ", Manufacturer: " << manufacturer << endl;
-    cout << "Camera Quality: " << cameraQuality << ", Power: " << power << endl;
-    cout << "Status: " << (status ? "Active" : "Inactive") << endl;
+    cout << "=============================" << endl;
+    cout << "   Security Camera Info      " << endl;
+    cout << "=============================" << endl;
+    cout << "ID            : " << id << endl;
+    cout << "Name          : " << name << endl;
+    cout << "Manufacturer  : " << manufacturer << endl;
+    cout << "Camera Quality: " << cameraQuality << endl;
+    cout << "Power         : " << power << endl;
+    cout << "Status        : " << (status ? "Active" : "Inactive") << endl;
+    cout << "=============================" << endl;
 }
