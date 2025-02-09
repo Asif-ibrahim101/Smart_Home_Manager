@@ -21,6 +21,6 @@ void Thermostat::InteractionEvent() {
 void Thermostat::ViewInfo() {
     cout << "Thermostat Info:" << endl;
     cout << "ID: " << id << ", Name: " << name << ", Manufacturer: " << manufacturer << endl;
-    cout << "Target Temperature: " << targetTemperature << "°C" << endl;
+    cout << "Target Temperature: " << targetTemperature << "C" << endl;
     cout << "Status: " << (status ? "Active" : "Inactive") << endl;
 }
