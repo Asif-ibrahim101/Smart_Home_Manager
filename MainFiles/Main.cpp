@@ -47,7 +47,7 @@ void listDevices(const vector<unique_ptr<Device>> &devices)
     {
         cout << i + 1 << ".\n";
         devices[i]->ViewInfo();
-        cout << "---------------------\n";
+        cout << "--------------------------------------------------------------\n";
     };
 };
 
