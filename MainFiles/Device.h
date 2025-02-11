@@ -1,7 +1,6 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include <string>
 #include <iostream>
 using namespace std;
 
@@ -26,13 +25,24 @@ public:
     // Check connection status.
     bool CheckConnection();
 
+
     // Pure virtual methods for device-specific behavior.
     virtual void InteractionEvent() = 0;
     virtual void ViewInfo() = 0;
 
     // Setter methods for editing device attributes.
     void SetName(const string &newName) { name = newName; }
-    void SetManufacturer(const string &newManufacturer) { manufacturer = newManufacturer; }
+    void SetManufacturer(const string &newManufacturer) { manufacturer = newManufacturer; } 
+
+
+    // getter for getting results after searching
+    int GetID() {
+        return id;
+    }
+
+    string GetName() {
+        return name;
+    }
 };
 
 #endif
