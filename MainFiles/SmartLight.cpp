@@ -32,7 +32,9 @@ void SmartLight::InteractionEvent() {
 }
 
 void SmartLight::ViewInfo() {
-    cout << "==================== Smart Light Info ====================" << endl;
+    cout << "=============================" << endl;
+    cout << "      SmartLight Info        " << endl;
+    cout << "=============================" << endl;
     cout << "ID            : " << id << endl;
     cout << "Name          : " << name << endl;
     cout << "Manufacturer  : " << manufacturer << endl;

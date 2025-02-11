@@ -12,8 +12,7 @@
 using namespace std;
 
 // Displaying the main menu
-void displayMainMenu()
-{
+void displayMainMenu() {
     cout << "\n--- Smart Home Automation Manager ---\n";
     cout << "1. Activate all devices\n";
     cout << "2. Deactivate all devices\n";
@@ -24,7 +23,8 @@ void displayMainMenu()
     cout << "7. Edit an existing device\n";
     cout << "8. Delete a device\n";
     cout << "9. View devices by connection status\n";
-    cout << "10. Exit\n";
+    cout << "10. Search for a device\n";
+    cout << "11. Exit\n";
     cout << "Enter your choice: ";
 }
 
@@ -60,6 +60,51 @@ int generateRandomID() {
     static std::uniform_int_distribution<> dis(1000, 9999); // Random ID between 1000 and 9999
     return dis(gen);
 }
+
+// Function to search for a device by ID or name.
+void searchDevice(const vector<unique_ptr<Device>>& devices) {
+    cout << "\n--- Device Search ---\n";
+    cout << "Search by:\n";
+    cout << "1. Device ID\n";
+    cout << "2. Device Name\n";
+    cout << "Enter choice: ";
+    int searchChoice;
+    cin >> searchChoice;
+    if (searchChoice == 1) {
+        cout << "Enter device ID to search: ";
+        int searchID;
+        cin >> searchID;
+        bool found = false;
+        for (auto &device : devices) {
+            if (device->GetID() == searchID) {
+                cout << "Device found:\n";
+                device->ViewInfo();
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            cout << "No device found with ID \"" << searchID << "\".\n";
+    } else if (searchChoice == 2) {
+        cout << "Enter device name to search: ";
+        string searchName;
+        cin >> ws;
+        getline(cin, searchName);
+        bool found = false;
+        for (auto &device : devices) {
+            if (device->GetName() == searchName) {
+                cout << "Device found:\n";
+                device->ViewInfo();
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+            cout << "No device found with name \"" << searchName << "\".\n";
+    } else {
+        cout << "Invalid search choice.\n";
+    }
+};
 
 // the main function
 int main()
@@ -271,6 +316,9 @@ int main()
             break;
         }
         case 10:
+            searchDevice(devices);
+            break;
+        case 11:
             running = false;
             break;
         default:

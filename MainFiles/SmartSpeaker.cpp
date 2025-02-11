@@ -23,7 +23,9 @@ void SmartSpeaker::InteractionEvent() {
 }
 
 void SmartSpeaker::ViewInfo() {
-    cout << "==================== Smart Speaker Info ====================" << endl;
+    cout << "=============================" << endl;
+    cout << "      SmartSpeaker Info        " << endl;
+    cout << "=============================" << endl;
     cout << "ID           : " << id << endl;
     cout << "Name         : " << name << endl;
     cout << "Manufacturer : " << manufacturer << endl;

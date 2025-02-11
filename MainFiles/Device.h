@@ -33,6 +33,16 @@ public:
     // Setter methods for editing device attributes.
     void SetName(const string &newName) { name = newName; }
     void SetManufacturer(const string &newManufacturer) { manufacturer = newManufacturer; } 
+
+
+    // getter for getting results after searching
+    int GetID() {
+        return id;
+    }
+
+    string GetName() {
+        return name;
+    }
 };
 
 #endif
