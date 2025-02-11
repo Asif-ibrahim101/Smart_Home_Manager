@@ -49,7 +49,7 @@ void listDevices(const vector<unique_ptr<Device>> &devices)
         devices[i]->ViewInfo();
         cout << "---------------------\n";
     };
-}
+};
 
 
 // Function to generate a random ID
@@ -62,7 +62,8 @@ int generateRandomID() {
 }
 
 // Function to search for a device by ID or name.
-void searchDevice(const vector<unique_ptr<Device>>& devices) {
+// Updated searchDevice function that allows individual operations on the found device.
+void searchDevice(vector<unique_ptr<Device>>& devices) {
     cout << "\n--- Device Search ---\n";
     cout << "Search by:\n";
     cout << "1. Device ID\n";
@@ -70,41 +71,79 @@ void searchDevice(const vector<unique_ptr<Device>>& devices) {
     cout << "Enter choice: ";
     int searchChoice;
     cin >> searchChoice;
+    
+    // Variable to hold pointer to the found device.
+    Device* foundDevice = nullptr;
+    
     if (searchChoice == 1) {
         cout << "Enter device ID to search: ";
-        int searchID;
-        cin >> searchID;
-        bool found = false;
+        int searchId;
+        cin >> searchId;
         for (auto &device : devices) {
-            if (device->GetID() == searchID) {
-                cout << "Device found:\n";
-                device->ViewInfo();
-                found = true;
+            if (device->GetID() == searchId) {
+                foundDevice = device.get();
                 break;
             }
         }
-        if (!found)
-            cout << "No device found with ID \"" << searchID << "\".\n";
+        if (!foundDevice) {
+            cout << "No device found with ID " << searchId << ".\n";
+            return;
+        }
     } else if (searchChoice == 2) {
         cout << "Enter device name to search: ";
         string searchName;
-        cin >> ws;
+        cin >> ws; // skip any leading whitespace
         getline(cin, searchName);
-        bool found = false;
         for (auto &device : devices) {
             if (device->GetName() == searchName) {
-                cout << "Device found:\n";
-                device->ViewInfo();
-                found = true;
+                foundDevice = device.get();
                 break;
             }
         }
-        if (!found)
+        if (!foundDevice) {
             cout << "No device found with name \"" << searchName << "\".\n";
+            return;
+        }
     } else {
         cout << "Invalid search choice.\n";
+        return;
     }
-};
+    
+    // If a device was found, display its info.
+    cout << "\nDevice found:\n";
+    foundDevice->ViewInfo();
+    
+    // Ask if the user wants to perform individual operations on the found device.
+    cout << "\nWould you like to perform operations on this device?\n";
+    cout << "1. Yes\n2. No\nEnter choice: ";
+    int opChoice;
+    cin >> opChoice;
+    if (opChoice != 1) {
+        return;
+    }
+    
+    // Display the individual operations menu.
+    displayIndividualMenu();
+    int subChoice;
+    cin >> subChoice;
+    switch(subChoice) {
+        case 1:
+            foundDevice->Activate();
+            break;
+        case 2:
+            foundDevice->Deactivate();
+            break;
+        case 3:
+            foundDevice->InteractionEvent();
+            break;
+        case 4:
+            foundDevice->ViewInfo();
+            break;
+        default:
+            cout << "Invalid individual operation choice.\n";
+    }
+}
+
 
 // the main function
 int main()
