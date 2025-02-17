@@ -3,7 +3,7 @@
 Device::Device(int _id, const string &_name, const string &_manufacturer)
     : id(_id), name(_name), manufacturer(_manufacturer), status(false), isConnected(true) { }
 
-Device::~Device() { }
+Device::~Device() {}
 
 void Device::Activate() {
     status = true;

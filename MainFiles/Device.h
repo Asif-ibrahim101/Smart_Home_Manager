@@ -26,7 +26,7 @@ public:
     bool CheckConnection();
 
 
-    // Pure virtual methods for device-specific behavior.
+    // virtual methods for device-specific behavior.
     virtual void InteractionEvent() = 0;
     virtual void ViewInfo() = 0;
 

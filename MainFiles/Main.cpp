@@ -12,7 +12,8 @@
 using namespace std;
 
 // Displaying the main menu
-void displayMainMenu() {
+void displayMainMenu()
+{
     cout << "\n--- Smart Home Automation Manager ---\n";
     cout << "1. Activate all devices\n";
     cout << "2. Deactivate all devices\n";
@@ -51,124 +52,150 @@ void listDevices(const vector<unique_ptr<Device>> &devices)
     };
 };
 
+// Helper function to get a validated integer input. took for stackoverflow
+int getValidatedInt(const string &prompt) {
+    int value;
+    while (true) {
+        cout << prompt;
+        if (cin >> value) {  // If input is valid...
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear leftover input.
+            return value;
+        } else {
+            // If input fails, clear the error and flush the input buffer.
+            cout << "Invalid input. Please enter an integer value." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+}
 
 // Function to generate a random ID
 // taken form the internet
-int generateRandomID() {
-    static std::random_device rd; // Seed
-    static std::mt19937 gen(rd()); // Mersenne Twister engine
+int generateRandomID()
+{
+    static std::random_device rd;                           // Seed
+    static std::mt19937 gen(rd());                          // Mersenne Twister engine
     static std::uniform_int_distribution<> dis(1000, 9999); // Random ID between 1000 and 9999
     return dis(gen);
 }
 
 // Function to search for a device by ID or name.
 // Updated searchDevice function that allows individual operations on the found device.
-void searchDevice(vector<unique_ptr<Device>>& devices) {
+void searchDevice(vector<unique_ptr<Device>> &devices)
+{
     cout << "\n--- Device Search ---\n";
     cout << "Search by:\n";
     cout << "1. Device ID\n";
     cout << "2. Device Name\n";
     cout << "Enter choice: ";
-    int searchChoice;
-    cin >> searchChoice;
-    
+    int searchChoice = getValidatedInt("Enter choice: ");
+
     // Variable to hold pointer to the found device.
-    Device* foundDevice = nullptr;
-    
-    if (searchChoice == 1) {
+    Device *foundDevice = nullptr;
+
+    if (searchChoice == 1)
+    {
         cout << "Enter device ID to search: ";
         int searchId;
         cin >> searchId;
-        for (auto &device : devices) {
-            if (device->GetID() == searchId) {
+        for (auto &device : devices)
+        {
+            if (device->GetID() == searchId)
+            {
                 foundDevice = device.get();
                 break;
             }
         }
-        if (!foundDevice) {
+        if (!foundDevice)
+        {
             cout << "No device found with ID " << searchId << ".\n";
             return;
         }
-    } else if (searchChoice == 2) {
+    }
+    else if (searchChoice == 2)
+    {
         cout << "Enter device name to search: ";
         string searchName;
-        cin >> ws; // skip any leading whitespace
         getline(cin, searchName);
-        for (auto &device : devices) {
-            if (device->GetName() == searchName) {
+
+        for (auto &device : devices)
+        {
+            if (device->GetName() == searchName)
+            {
                 foundDevice = device.get();
                 break;
             }
         }
-        if (!foundDevice) {
+        if (!foundDevice)
+        {
             cout << "No device found with name \"" << searchName << "\".\n";
             return;
         }
-    } else {
+    }
+    else
+    {
         cout << "Invalid search choice.\n";
         return;
     }
-    
+
     // If a device was found, display its info.
     cout << "\nDevice found:\n";
     foundDevice->ViewInfo();
-    
+
     // Ask if the user wants to perform individual operations on the found device.
     cout << "\nWould you like to perform operations on this device?\n";
     cout << "1. Yes\n2. No\nEnter choice: ";
-    int opChoice;
-    cin >> opChoice;
-    if (opChoice != 1) {
+    int opChoice = getValidatedInt("Enter your choice: ");
+
+    if (opChoice != 1)
+    {
         return;
     }
-    
+
     // Display the individual operations menu.
     displayIndividualMenu();
-    int subChoice;
-    cin >> subChoice;
-    switch(subChoice) {
-        case 1:
-            foundDevice->Activate();
-            break;
-        case 2:
-            foundDevice->Deactivate();
-            break;
-        case 3:
-            foundDevice->InteractionEvent();
-            break;
-        case 4:
-            foundDevice->ViewInfo();
-            break;
-        default:
-            cout << "Invalid individual operation choice.\n";
+    int subChoice = getValidatedInt("Enter your choice: ");;
+    switch (subChoice)
+    {
+    case 1:
+        foundDevice->Activate();
+        break;
+    case 2:
+        foundDevice->Deactivate();
+        break;
+    case 3:
+        foundDevice->InteractionEvent();
+        break;
+    case 4:
+        foundDevice->ViewInfo();
+        break;
+    default:
+        cout << "Invalid individual operation choice.\n";
     }
 }
-
 
 // the main function
 int main()
 {
     vector<unique_ptr<Device>> devices;
 
-    // Allocating all the devicess on a Heap memory
+    // Allocating all the devices on a Heap memory
     devices.push_back(unique_ptr<Device>(new SecurityCamera(generateRandomID(), "FrontDoorCamera", "CamCorp", "1080p", "battery")));
     devices.push_back(unique_ptr<Device>(new Thermostat(generateRandomID(), "LivingRoomThermostat", "HeatTech", 22.5)));
     devices.push_back(unique_ptr<Device>(new SmartSpeaker(generateRandomID(), "KitchenSpeaker", "SoundInc", 50)));
     devices.push_back(unique_ptr<Device>(new SmartLight(generateRandomID(), "BedroomLight", "BrightCo", 75, "RGB")));
 
-    // Choose
-    int Choice;
-
-    // crating a base case
+    // Creating a base case
     bool running = true;
 
     // Main loop for the interface
     while (running)
     {
+        // Display main menu
         displayMainMenu();
-        cin >> Choice;
+        int choice = getValidatedInt("");
 
-        switch (Choice)
+        switch (choice)
         {
         case 1: // Activate all devices.
             for (auto &device : devices)
@@ -196,22 +223,19 @@ int main()
         case 5:
         { // Individual device operations.
             listDevices(devices);
-            cout << "Select device number: ";
-            int devNum;
-            cin >> devNum;
+            int devNum = getValidatedInt("Select device number: ");
 
-            // cheker for selection
+            // Check for valid selection
             if (devNum < 1 || devNum > devices.size())
             {
                 cout << "Invalid device number.\n";
                 break;
             }
-            
+
             auto &selectedDevice = devices[devNum - 1];
-            
+
             displayIndividualMenu();
-            int subChoice;
-            cin >> subChoice;
+            int subChoice = getValidatedInt("Enter your choice: ");
 
             switch (subChoice)
             {
@@ -239,20 +263,12 @@ int main()
             cout << "2. Thermostat\n";
             cout << "3. Smart Speaker\n";
             cout << "4. Smart Light\n";
-            cout << "Enter choice: ";
-
-            int typeChoice;
-            cin >> typeChoice;
+            int typeChoice = getValidatedInt("Enter choice: ");
 
             int id = generateRandomID();
             string name, manufacturer;
 
-            // for cheking for uniqe id
-            // bool idExits = false;
-
             cout << "Enter device name: ";
-            cin >> name; // Skip any leading whitespace.
-
             getline(cin, name);
 
             cout << "Enter manufacturer: ";
@@ -288,7 +304,6 @@ int main()
                 cout << "Enter brightness level (0-100): ";
                 cin >> brightness;
                 cout << "Enter colour type (e.g., RGB): ";
-                cin >> ws;
                 getline(cin, colour);
                 devices.push_back(unique_ptr<Device>(new SmartLight(id, name, manufacturer, brightness, colour)));
             }
@@ -301,9 +316,7 @@ int main()
         case 7:
         { // Edit an existing device.
             listDevices(devices);
-            cout << "Select device number to edit: ";
-            int devNum;
-            cin >> devNum;
+            int devNum = getValidatedInt("Select device number to edit: ");
 
             if (devNum < 1 || devNum > devices.size())
             {
@@ -312,8 +325,6 @@ int main()
             }
             cout << "Enter new name: ";
             string newName;
-
-            cin >> newName;
             getline(cin, newName);
 
             cout << "Enter new manufacturer: ";
@@ -328,9 +339,7 @@ int main()
         case 8:
         { // Delete a device.
             listDevices(devices);
-            cout << "Select device number to delete: ";
-            int devNum;
-            cin >> devNum;
+            int devNum = getValidatedInt("Select device number to delete: ");
 
             if (devNum < 1 || devNum > devices.size())
             {
