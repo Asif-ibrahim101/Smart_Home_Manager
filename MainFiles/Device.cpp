@@ -1,18 +1,20 @@
 #include "Device.h"
 
 Device::Device(int _id, const string &_name, const string &_manufacturer)
-    : id(_id), name(_name), manufacturer(_manufacturer), status(false), isConnected(true) { }
+    : id(_id), name(_name), manufacturer(_manufacturer), status(false), isConnected(false) { }
 
 Device::~Device() {}
 
 void Device::Activate() {
     status = true;
-    cout << name << " activated." << endl;
+    isConnected = true;
+    cout << name << " activated and connected" << endl;
 }
 
 void Device::Deactivate() {
     status = false;
-    cout << name << " deactivated." << endl;
+    isConnected = false;
+    cout << name << " deactivated and disconnected" << endl;
 }
 
 bool Device::CheckConnection() {

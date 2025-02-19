@@ -24,5 +24,6 @@ void SecurityCamera::ViewInfo() {
     cout << "Camera Quality: " << cameraQuality << endl;
     cout << "Power         : " << power << endl;
     cout << "Status        : " << (status ? "Active" : "Inactive") << endl;
+    cout << "Connection    : " << (isConnected ? "Connected" : "disconnected") << endl;
     cout << "=============================" << endl;
 }
