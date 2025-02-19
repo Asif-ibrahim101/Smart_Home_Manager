@@ -28,5 +28,6 @@ void Thermostat::ViewInfo() {
     cout << "-----------------------------" << endl;
     cout << "Target Temp   : " << targetTemperature << "°C" << endl;
     cout << "Status        : " << (status ? "Active" : "Inactive") << endl;
+    cout << "Connection    : " << (isConnected ? "Connected" : "disconnected") << endl;
     cout << "=============================" << endl;
 }

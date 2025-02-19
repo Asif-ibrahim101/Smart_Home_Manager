@@ -41,5 +41,6 @@ void SmartLight::ViewInfo() {
     cout << "Brightness    : " << brightnessLevel << "%" << endl;
     cout << "Colour Type   : " << colourType << endl;
     cout << "Status        : " << (status ? "Active" : "Inactive") << endl;
+    cout << "Connection    : " << (isConnected ? "Connected" : "disconnected") << endl;
     cout << "==========================================================" << endl;
 }

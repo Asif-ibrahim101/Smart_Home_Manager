@@ -31,5 +31,6 @@ void SmartSpeaker::ViewInfo() {
     cout << "Manufacturer : " << manufacturer << endl;
     cout << "Volume Level : " << volumeLevel << endl;
     cout << "Status       : " << (status ? "Active" : "Inactive") << endl;
+    cout << "Connection    : " << (isConnected ? "Connected" : "disconnected") << endl;
     cout << "============================================================" << endl;
 }
